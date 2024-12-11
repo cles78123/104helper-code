@@ -27,6 +27,9 @@ class SearchItemProcessor:
         total_jobs = len(self.data)
         processed_jobs = 0
         
+        if status_callback:
+            status_callback(f"開始過濾公司資料 (共 {total_jobs} 筆)", 0)
+        
         for job in self.data:
             company = job['custName']
             processed_jobs += 1

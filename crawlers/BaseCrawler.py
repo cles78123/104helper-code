@@ -20,14 +20,34 @@ class BaseCrawler:
         from .processor.SearchItemProcessor import SearchItemProcessor 
         
         parsed_url = urlparse(url)
-        
         url_query = parse_qs(parsed_url.query)
+        
+        # 先爬第一頁獲取總頁數
         url_query['page'] = ['1']
         new_query_string = urlencode(url_query, doseq=True)
-        
         target_url = parsed_url.scheme + '://' + parsed_url.netloc + parsed_url.path + '/api/jobs?' + new_query_string
         
-        response = BaseCrawler.fetchWebpage(target_url)
-        return SearchItemProcessor(url_query, response).filterCompany(conditions, status_callback)
+        first_response = BaseCrawler.fetchWebpage(target_url)
+        processor = SearchItemProcessor(url_query, first_response)
+        
+        # 如果有多頁，繼續爬取剩餘頁面
+        all_data = first_response['data']
+        total_pages = first_response['metadata']['pagination']['lastPage']
+        
+        if total_pages > 1:
+            for page in range(2, total_pages + 1):
+                if status_callback:
+                    status_callback(f"正在爬取第 {page}/{total_pages} 頁", (page / total_pages) * 100)
+                    
+                url_query['page'] = [str(page)]
+                new_query_string = urlencode(url_query, doseq=True)
+                target_url = parsed_url.scheme + '://' + parsed_url.netloc + parsed_url.path + '/api/jobs?' + new_query_string
+                
+                page_response = BaseCrawler.fetchWebpage(target_url)
+                all_data.extend(page_response['data'])
+        
+        # 更新 processor 中的資料為所有頁面的資料
+        processor.data = all_data
+        return processor.filterCompany(conditions, status_callback)
         
       
