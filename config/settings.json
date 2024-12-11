@@ -1,0 +1,40 @@
+{
+    "search_company_rules": {
+        "exclude_missing_employee_and_capital": {
+            "name": "排除員工人數與資本額皆不提供",
+            "status": false
+        },
+        "exclude_default_company_intro": {
+            "name": "排除公司介紹為預設",
+            "status": false
+        },
+        "exclude_short_company_intro": {
+            "name": "排除公司介紹過於簡短",
+            "status": false
+        },
+        "exclude_short_main_product_description": {
+            "name": "排除公司主要商品過於簡短",
+            "status": false
+        }
+    },
+    "search_job_rules": {
+        "exclude_outdated_entries": {
+            "name": "排除刊登日期超過兩個月",
+            "status": false
+        }
+    },
+    "headers": {
+        "accept": "application/json, text/plain, */*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "zh-TW,zh;q=0.9,en;q=0.8,en-US;q=0.7",
+        "connection": "keep-alive",
+        "host": "www.104.com.tw",
+        "sec-ch-ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    }
+}
